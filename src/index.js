@@ -3,6 +3,7 @@ const path = require('path');
 const http = require('http');
 const socketio = require('socket.io');
 const Filter = require('bad-words');
+const stc = require('string-to-color');
 
 const { generateMessage, generateLocationMessage } = require('./utils/messages');
 const {
@@ -51,7 +52,7 @@ io.on('connection', (socket) => {
             return callback('Profanity is not allowed!');
         }
 
-        io.to(user.room).emit('message', generateMessage(user.username, message)); // emit to all connections
+        io.to(user.room).emit('message', generateMessage(user.username, message, stc(socket.id))); // emit to all connections
         callback();
     });
 
