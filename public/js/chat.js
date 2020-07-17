@@ -7,6 +7,7 @@ const buttonLocation = document.getElementById('send-location');
 const messages = document.getElementById('messages'); 
 const locations = document.getElementById('locations');
 const sidebar = document.getElementById('sidebar');
+const music = document.getElementById('music');
 
 //Templates
 const messagesTemplate = document.getElementById('message-templete').innerHTML;
@@ -41,7 +42,17 @@ const autoscroll = () => {
 
 socket.on('message', (message) => {
     console.log(message);
+    console.log(message.username === 'Admin');
     console.log(socket.id);
+    music.src = '';
+    if (message.username === 'Admin') {
+        music.src = '/audio/horn.mp3';
+        console.log(music.src);
+    } else {
+        console.log('bell');
+        music.src = '/audio/bell.mp3';
+    }
+    //music.src = '/audio/bell.mp3';
     const html = Mustache.render(messagesTemplate, {
         username: message.username,
         message: message.text,
